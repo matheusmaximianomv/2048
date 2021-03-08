@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>   
+    <head>
+       <title>JOGO - 2048</title>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />     
+       
+       <link href="css/reset.css" rel="stylesheet" type="text/css">
+       <link href="css/main.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <main id="geral"> <!-- Geral -->
+            <header>
+                <h1>2048</h1>
+                
+                <div id="maiorPontuacao">
+                    <p>BEST</p>
+                    <h4>0</h4>
+                </div>
+                
+                <div id="pontuacaoAtual">
+                    <p>SCORE</p>
+                    <h4>0</h4>
+                </div>
+            </header>
+            
+            
+            
+            <section id="tabuleiro">
+                <h4 id="restart">Restart</h4>
+                <div class="linha">
+                    <div class="celula" data-linha=1 data-coluna=1 data-ocupado="false"></div>
+                    <div class="celula" data-linha=1 data-coluna=2 data-ocupado="false"></div>
+                    <div class="celula" data-linha=1 data-coluna=3 data-ocupado="false"></div>
+                    <div class="celula" data-linha=1 data-coluna=4 data-ocupado="false"></div>
+                </div>
+                <div class="linha">
+                    <div class="celula" data-linha=2 data-coluna=1 data-ocupado="false"></div>
+                    <div class="celula" data-linha=2 data-coluna=2 data-ocupado="false"></div>
+                    <div class="celula" data-linha=2 data-coluna=3 data-ocupado="false"></div>
+                    <div class="celula" data-linha=2 data-coluna=4 data-ocupado="false"></div>
+                </div>
+                <div class="linha">
+                    <div class="celula" data-linha=3 data-coluna=1 data-ocupado="false"></div>
+                    <div class="celula" data-linha=3 data-coluna=2 data-ocupado="false"></div>
+                    <div class="celula" data-linha=3 data-coluna=3 data-ocupado="false"></div>
+                    <div class="celula" data-linha=3 data-coluna=4 data-ocupado="false"></div>
+                </div>
+                <div class="linha">
+                    <div class="celula" data-linha=4 data-coluna=1 data-ocupado="false"></div>
+                    <div class="celula" data-linha=4 data-coluna=2 data-ocupado="false"></div>
+                    <div class="celula" data-linha=4 data-coluna=3 data-ocupado="false"></div>
+                    <div class="celula" data-linha=4 data-coluna=4 data-ocupado="false"></div>
+                </div>
+<!--                <div class="tile"></div>-->
+            </section>
+            
+            <img id="info" src="img/info.png">
+        </main>
+        
+        <section id="informacao">
+            <img class="fechar" src="img/fechar.png">
+            <label>Como Jogar?</label>
+            <p>Junte os blocos iguais e consiga alcançar o bloco com 2048.</p>
+            <label>Social</label>
+            <div id="social">
+                <a href="https://www.facebook.com/izac.lima.7" onclick="window.open('https://www.facebook.com/izac.lima.7', '_system');"><img src="img/facebook-logo.png"></a>
+                <a href="https://twitter.com/14isac" onclick="window.open('https://twitter.com/14isac', '_system');"><img src="img/twitter-logo.png"></a>
+                <a href="https://www.youtube.com/user/izactutoriais" onclick="window.open('https://www.youtube.com/user/izactutoriais', '_system');"><img src="img/youtube-logo.png"></a>
+                <a href="https://www.instagram.com/izacgaldino/" onclick="window.open('https://www.instagram.com/izacgaldino/', '_system');"><img src="img/instagram-logo.png"></a>
+            </div>
+            <h4>Criado por Izac Galdino</h4>
+        </section>
+        
+        <section id="perdeu">
+            <p>Você Perdeu</p>
+            <button id="recomecar">Recomeçar</button>
+        </section>
+
+        <section id="ganhou">
+            <p>Você Ganhou</p>
+            <div id="botoes">
+                <button id="continuar">Continuar</button>
+                <button id="novo">Novo Jogo</button>
+            </div>
+        </section>
+        
+        <!-- SCRIPTS -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.transit.min.js"></script>
+        <script src="js/jquery-mobile.js"></script>
+        <script src="js/buzz.min.js"></script> <!-- audio do jogo -->
+        <script src="js/main.js"></script>
+        
+    </body>
+</html>
