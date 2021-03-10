@@ -134,7 +134,7 @@ function gerarNovoTile () {
 
         elemento = $(`.celula[data-linha=${linha}][data-coluna=${coluna}]`)
 
-        if (elemento.attr('data-ocupado') == 'false') {
+        if (elemento.attr('data-ocupado') == false) {
             topo = elemento.position().top
             esquerda = elemento.position().left
 
@@ -168,9 +168,11 @@ function gerarNovoTile () {
             })
             tile.hide()
 
-            tile.appendTo($('#tabuleiro')).fadeIn()
+            tile.appendTo($('#tabuleiro')).fadeIn(() => {
+                // tile.addClass('animTiles')
+            })
 
-            elemento.attr('data-ocupado', 'true')
+            elemento.attr('data-ocupado', true)
 
             tabuleiro[ linha ][ coluna ] = valor
 
@@ -193,7 +195,7 @@ function verificarCelulasLivres () {
     cont = 0
     for (let i = 1; i < 5; i++) {
         for (let j = 1; j < 5; j++) {
-            if ($(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado') == 'false') {
+            if ($(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado') == false) {
                 celulasLivres[ cont ] = i + ',' + j
                 cont++
             }
@@ -207,7 +209,7 @@ function moverTilesBaixo (debug) {
     let tilesMovidos = 0
     for (let i = 1; i <= 4; i++) {
         // Pegar valores da coluna
-        coluna = {}
+        let coluna = {}
         for (let j = 1; j <= 4; j++) {
             coluna[ j ] = tabuleiro[ j ][ i ]
         }
@@ -219,12 +221,12 @@ function moverTilesBaixo (debug) {
                     let fazer = 'nada'
                     // Variavel que diz para onde o tile deve ir
                     let linhaLivre
-                    teste = j + 1
+                    let teste = j + 1
                     while (teste <= 4) {
                         if (coluna[ teste ] == 0) {
                             fazer = 'mover'
                             linhaLivre = teste
-                        } else if (coluna[ teste ] == coluna[ j ] && $('.celula[data-linha=' + teste + '][data-coluna=' + i + ']').attr('data-somado') == 'false') {
+                        } else if (coluna[ teste ] == coluna[ j ] && $(`.celula[data-linha=${teste}][data-coluna=${i}]`).attr('data-somado') == false) {
                             fazer = 'somar'
                             linhaLivre = teste
                         } else if (coluna[ teste ] != coluna[ j ] && coluna[ teste ] != 0) {
@@ -281,7 +283,7 @@ function moverTilesCima (debug) {
     let tilesMovidos = 0
     for (let i = 1; i <= 4; i++) {
         // Pegar valores da coluna
-        coluna = {}
+        let coluna = {}
         for (let j = 1; j <= 4; j++) {
             coluna[ j ] = tabuleiro[ j ][ i ]
         }
@@ -293,12 +295,12 @@ function moverTilesCima (debug) {
                     let fazer = 'nada'
                     // Variavel que diz para onde o tile deve ir
                     let linhaLivre
-                    teste = j - 1
+                    let teste = j - 1
                     while (teste >= 1) {
                         if (coluna[ teste ] == 0) {
                             fazer = 'mover'
                             linhaLivre = teste
-                        } else if (coluna[ teste ] == coluna[ j ] && $(`.celula[data-linha=${teste}][data-coluna=${i}]`).attr('data-somado') == 'false') {
+                        } else if (coluna[ teste ] == coluna[ j ] && $(`.celula[data-linha=${teste}][data-coluna=${i}]`).attr('data-somado') == false) {
                             fazer = 'somar'
                             linhaLivre = teste
                         } else if (coluna[ teste ] != coluna[ j ] && coluna[ teste ] != 0) {
@@ -310,16 +312,16 @@ function moverTilesCima (debug) {
                                 coluna[ linhaLivre ] = coluna[ j ]
                                 coluna[ j ] = 0
                                 $(`.tile[data-linha=${j}][data-coluna=${i}]`).attr('data-linha', linhaLivre)
-                                $(`.celula[data-linha=${j}][data-coluna=${i}]`).attr('data-ocupado', 'false')
-                                $(`.celula[data-linha=${linhaLivre}][data-coluna=${i}]`).attr('data-ocupado', 'true')
+                                $(`.celula[data-linha=${j}][data-coluna=${i}]`).attr('data-ocupado', false)
+                                $(`.celula[data-linha=${linhaLivre}][data-coluna=${i}]`).attr('data-ocupado', true)
                                 tilesMovidos++
                             } else if (fazer == 'somar') {
                                 coluna[ linhaLivre ] *= 2
                                 pontuar(coluna[ linhaLivre ])
                                 coluna[ j ] = 0
-                                $(`.celula[data-linha=${linhaLivre}][data-coluna=${i}]`).attr('data-somado', 'true')
-                                $(`.celula[data-linha=${j}][data-coluna=${i}]`).attr('data-ocupado', 'false')
-                                $(`.celula[data-linha=${linhaLivre}][data-coluna=${i}]`).attr('data-ocupado', 'true')
+                                $(`.celula[data-linha=${linhaLivre}][data-coluna=${i}]`).attr('data-somado', true)
+                                $(`.celula[data-linha=${j}][data-coluna=${i}]`).attr('data-ocupado', false)
+                                $(`.celula[data-linha=${linhaLivre}][data-coluna=${i}]`).attr('data-ocupado', true)
                                 $(`.tile[data-linha=${j}][data-coluna=${i}]`).attr('data-linha', linhaLivre)
 
                                 valor = $(`.tile[data-linha=${linhaLivre}][data-coluna=${i}]`).attr('data-numero')
@@ -348,12 +350,11 @@ function moverTilesCima (debug) {
 
 // Função para mover os tiles para esquerda
 function moverTilesEsquerda (debug) {
-
-    novoTabuleiro = { '1': {}, '2': {}, '3': {}, '4': {} }
-    tilesMovidos = 0
+    let novoTabuleiro = { '1': {}, '2': {}, '3': {}, '4': {} }
+    let tilesMovidos = 0
     for (let i = 1; i <= 4; i++) {
         // Pegar valores da coluna
-        linha = {}
+        let linha = {}
         for (let j = 1; j <= 4; j++) {
             linha[ j ] = tabuleiro[ i ][ j ]
         }
@@ -365,12 +366,12 @@ function moverTilesEsquerda (debug) {
                     let fazer = 'nada'
                     // Variavel que diz para onde o tile deve ir
                     let colunaLivre
-                    teste = j - 1
+                    let teste = j - 1
                     while (teste >= 1) {
                         if (linha[ teste ] == 0) {
                             fazer = 'mover'
                             colunaLivre = teste
-                        } else if (linha[ teste ] == linha[ j ] && $(`.celula[data-linha=${i}][data-coluna=${teste}]`).attr('data-somado') == 'false') {
+                        } else if (linha[ teste ] == linha[ j ] && $(`.celula[data-linha=${i}][data-coluna=${teste}]`).attr('data-somado') == false) {
                             fazer = 'somar'
                             colunaLivre = teste
                         } else if (linha[ teste ] != linha[ j ] && linha[ teste ] != 0) {
@@ -382,16 +383,16 @@ function moverTilesEsquerda (debug) {
                                 linha[ colunaLivre ] = linha[ j ]
                                 linha[ j ] = 0
                                 $(`.tile[data-linha=${i}][data-coluna=${j}]`).attr('data-coluna', colunaLivre)
-                                $(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado', 'false')
-                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-ocupado', 'true')
+                                $(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado', false)
+                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-ocupado', true)
                                 tilesMovidos++
                             } else if (fazer == 'somar') {
                                 linha[ colunaLivre ] *= 2
                                 pontuar(linha[ colunaLivre ])
                                 linha[ j ] = 0
-                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-somado', 'true')
-                                $(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado', 'false')
-                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-ocupado', 'true')
+                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-somado', true)
+                                $(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado', false)
+                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-ocupado', true)
                                 $(`.tile[data-linha=${i}][data-coluna=${j}]`).attr('data-coluna', colunaLivre)
 
                                 valor = $(`.tile[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-numero')
@@ -420,12 +421,11 @@ function moverTilesEsquerda (debug) {
 
 // Função para mover os tiles para direita
 function moverTilesDireita (debug) {
-
-    novoTabuleiro = { '1': {}, '2': {}, '3': {}, '4': {} }
-    tilesMovidos = 0
+    let novoTabuleiro = { '1': {}, '2': {}, '3': {}, '4': {} }
+    let tilesMovidos = 0
     for (let i = 1; i <= 4; i++) {
         // Pegar valores da coluna
-        linha = {}
+        let linha = {}
         for (let j = 1; j <= 4; j++) {
             linha[ j ] = tabuleiro[ i ][ j ]
         }
@@ -437,12 +437,12 @@ function moverTilesDireita (debug) {
                     let fazer = 'nada'
                     // Variavel que diz para onde o tile deve ir
                     let colunaLivre
-                    teste = j + 1
+                    let teste = j + 1
                     while (teste <= 4) {
                         if (linha[ teste ] == 0) {
                             fazer = 'mover'
                             colunaLivre = teste
-                        } else if (linha[ teste ] == linha[ j ] && $(`.celula[data-linha=${i}][data-coluna=${teste}]`).attr('data-somado') == 'false') {
+                        } else if (linha[ teste ] == linha[ j ] && $(`.celula[data-linha=${i}][data-coluna=${teste}]`).attr('data-somado') == false) {
                             fazer = 'somar'
                             colunaLivre = teste
                         } else if (linha[ teste ] != linha[ j ] && linha[ teste ] != 0) {
@@ -454,16 +454,16 @@ function moverTilesDireita (debug) {
                                 linha[ colunaLivre ] = linha[ j ]
                                 linha[ j ] = 0
                                 $(`.tile[data-linha=${i}][data-coluna=${j}]`).attr('data-coluna', colunaLivre)
-                                $(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado', 'false')
-                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-ocupado', 'true')
+                                $(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado', false)
+                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-ocupado', true)
                                 tilesMovidos++
                             } else if (fazer == 'somar') {
                                 linha[ colunaLivre ] *= 2
                                 pontuar(linha[ colunaLivre ])
                                 linha[ j ] = 0
-                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-somado', 'true')
-                                $(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado', 'false')
-                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-ocupado', 'true')
+                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-somado', true)
+                                $(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado', false)
+                                $(`.celula[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-ocupado', true)
                                 $(`.tile[data-linha=${i}][data-coluna=${j}]`).attr('data-coluna', colunaLivre)
 
                                 valor = $(`.tile[data-linha=${i}][data-coluna=${colunaLivre}]`).attr('data-numero')
@@ -516,14 +516,16 @@ function animTiles () {
             color: letra,
             textShadow: shadow
         }, 300, 'ease', () => {
+            // $(this).addClass('animTiles')
         })
 
     })
-    $('.celula').attr('data-somado', 'false')
+    $('.celula').attr('data-somado', false)
     verificarCelulasLivres()
     setTimeout(function () {
         gerarNovoTile()
         removerTilesRepetidos()
+        $('.tile').removeClass('animTiles')
     }, 300)
 }
 
@@ -614,7 +616,7 @@ function iniciarJogo () {
     console.log(tabuleiro)
     if (tabuleiro == 0) {
         $('.tile').remove()
-        $('.celula').attr('data-ocupado', 'false')
+        $('.celula').attr('data-ocupado', false)
         tabuleiro = { '1': {}, '2': {}, '3': {}, '4': {} }
         cont = 0
         celulasLivres = []
@@ -677,7 +679,7 @@ function iniciarJogo () {
         verificarCelulasLivres()
     }
 
-    $('.celula').attr('data-somado', 'false')
+    $('.celula').attr('data-somado', false)
     jogoAcabou()
 }
 
