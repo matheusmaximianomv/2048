@@ -17,7 +17,7 @@ var intervaloDelay
 var ganhou = false
 
 $(document).ready(() => {
-    iniciarJogo()
+    // iniciarJogo()
 })
 
 // Quando pressionam alguma tecla do teclado
@@ -127,14 +127,14 @@ $('.fechar').click(() => {
 // Gera um novo tile
 function gerarNovoTile () {
     while (true) {
-        index = Math.floor(Math.random() * (celulasLivres.length - 1 - 0 + 1))
-        referencia = celulasLivres[ index ]
-        linha = referencia.split(',')[ 0 ]
-        coluna = referencia.split(',')[ 1 ]
+        let index = Math.floor(Math.random() * (celulasLivres.length - 1 - 0 + 1))
+        let referencia = celulasLivres[ index ]
+        let linha = referencia.split(',')[ 0 ]
+        let coluna = referencia.split(',')[ 1 ]
 
-        elemento = $(`.celula[data-linha=${linha}][data-coluna=${coluna}]`)
+        let elemento = $(`.celula[data-linha=${linha}][data-coluna=${coluna}]`)
 
-        if (elemento.attr('data-ocupado') == false) {
+        if (elemento.attr('data-ocupado') == 'false') {
             topo = elemento.position().top
             esquerda = elemento.position().left
 
@@ -195,7 +195,7 @@ function verificarCelulasLivres () {
     cont = 0
     for (let i = 1; i < 5; i++) {
         for (let j = 1; j < 5; j++) {
-            if ($(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado') == false) {
+            if ($(`.celula[data-linha=${i}][data-coluna=${j}]`).attr('data-ocupado') == 'false') {
                 celulasLivres[ cont ] = i + ',' + j
                 cont++
             }
@@ -226,7 +226,7 @@ function moverTilesBaixo (debug) {
                         if (coluna[ teste ] == 0) {
                             fazer = 'mover'
                             linhaLivre = teste
-                        } else if (coluna[ teste ] == coluna[ j ] && $(`.celula[data-linha=${teste}][data-coluna=${i}]`).attr('data-somado') == false) {
+                        } else if (coluna[ teste ] == coluna[ j ] && $(`.celula[data-linha=${teste}][data-coluna=${i}]`).attr('data-somado') == 'false') {
                             fazer = 'somar'
                             linhaLivre = teste
                         } else if (coluna[ teste ] != coluna[ j ] && coluna[ teste ] != 0) {
@@ -300,7 +300,7 @@ function moverTilesCima (debug) {
                         if (coluna[ teste ] == 0) {
                             fazer = 'mover'
                             linhaLivre = teste
-                        } else if (coluna[ teste ] == coluna[ j ] && $(`.celula[data-linha=${teste}][data-coluna=${i}]`).attr('data-somado') == false) {
+                        } else if (coluna[ teste ] == coluna[ j ] && $(`.celula[data-linha=${teste}][data-coluna=${i}]`).attr('data-somado') == 'false') {
                             fazer = 'somar'
                             linhaLivre = teste
                         } else if (coluna[ teste ] != coluna[ j ] && coluna[ teste ] != 0) {
@@ -371,7 +371,7 @@ function moverTilesEsquerda (debug) {
                         if (linha[ teste ] == 0) {
                             fazer = 'mover'
                             colunaLivre = teste
-                        } else if (linha[ teste ] == linha[ j ] && $(`.celula[data-linha=${i}][data-coluna=${teste}]`).attr('data-somado') == false) {
+                        } else if (linha[ teste ] == linha[ j ] && $(`.celula[data-linha=${i}][data-coluna=${teste}]`).attr('data-somado') == 'false') {
                             fazer = 'somar'
                             colunaLivre = teste
                         } else if (linha[ teste ] != linha[ j ] && linha[ teste ] != 0) {
@@ -442,7 +442,7 @@ function moverTilesDireita (debug) {
                         if (linha[ teste ] == 0) {
                             fazer = 'mover'
                             colunaLivre = teste
-                        } else if (linha[ teste ] == linha[ j ] && $(`.celula[data-linha=${i}][data-coluna=${teste}]`).attr('data-somado') == false) {
+                        } else if (linha[ teste ] == linha[ j ] && $(`.celula[data-linha=${i}][data-coluna=${teste}]`).attr('data-somado') == 'false') {
                             fazer = 'somar'
                             colunaLivre = teste
                         } else if (linha[ teste ] != linha[ j ] && linha[ teste ] != 0) {
