@@ -1,5 +1,5 @@
-var tabuleiro
-var gameState = Object.freeze({
+let tabuleiro
+let gameState = Object.freeze({
     'menu': 0,
     'informacoes': 1,
     'jogando': 2,
@@ -7,17 +7,17 @@ var gameState = Object.freeze({
     'ganhou': 4,
     'perdeu': 5
 })
-var estadoAtual
-var pontuacaoAtual
-var maiorPontuacao
-var movimento
-var celulasLivres = []
-var liberado = true
-var intervaloDelay
-var ganhou = false
+let estadoAtual
+let pontuacaoAtual
+let maiorPontuacao
+let movimento
+let celulasLivres = []
+let liberado = true
+let intervaloDelay
+let ganhou = false
 
 $(document).ready(() => {
-    // iniciarJogo()
+    iniciarJogo()
 })
 
 // Quando pressionam alguma tecla do teclado
@@ -63,9 +63,9 @@ $(document).swipedown(() => {
 // Quando tela redimensionar atualiza o tamanho dos tiles
 $(window).resize(() => {
     if (window.innerWidth < 700) {
-        elemento = $('.celula[data-linha=1][data-coluna=1]')
-        largura = elemento.width()
-        altura = elemento.height()
+        let elemento = $('.celula[data-linha=1][data-coluna=1]')
+        let largura = elemento.width()
+        let altura = elemento.height()
         let esquerdas = [], topos = []
         for (let i = 2; i <= 4; i++) {
             esquerdas.push($(`.celula[data-linha=1][data-coluna=${i}]`).position().left)
@@ -135,17 +135,18 @@ function gerarNovoTile () {
         let elemento = $(`.celula[data-linha=${linha}][data-coluna=${coluna}]`)
 
         if (elemento.attr('data-ocupado') == 'false') {
-            topo = elemento.position().top
-            esquerda = elemento.position().left
+            let topo = elemento.position().top
+            let esquerda = elemento.position().left
 
             if (coluna != 1) esquerda += 5
-            values = [ 2, 2, 2, 4 ]
+
+            let values = [ 2, 2, 2, 4 ]
             values.sort(function () {
                 return .5 - Math.random()
             })
 
-            valor = values[ 0 ]
-            cor = getCor(valor)
+            let valor = values[ 0 ]
+            let cor = getCor(valor)
 
             let tile = $('<div>', {
                 class: 'tile',
@@ -183,6 +184,7 @@ function gerarNovoTile () {
             break
         }
     }
+
     jogoAcabou()
     liberado = false
     setTimeout(function () {
@@ -593,18 +595,17 @@ function pontuar (pontos) {
 
 // Função para verificar se o jogo acabou
 function jogoAcabou () {
-    if (celulasLivres.length == 0) {
-        if (movimentosPossiveis()) {
-            estadoAtual = gameState.perdeu
-            $('#perdeu').fadeIn()
+    if (celulasLivres.length == 0 && movimentosPossiveis()) {
+        estadoAtual = gameState.perdeu
+        $('#perdeu').fadeIn()
 
-            localStorage.removeItem('tabuleiro')
-            localStorage.removeItem('score')
-        }
+        localStorage.removeItem('tabuleiro')
+        localStorage.removeItem('score')
     }
 }
 
 // Função para carregarJogoSalvo
+
 function iniciarJogo () {
     estadoAtual = gameState.jogando
     pontuacaoAtual = (typeof localStorage.score != 'undefined') ? parseInt(localStorage.score) : 0
@@ -688,8 +689,8 @@ function movimentosPossiveis () {
     teste = true
     for (let i = 1; i <= 4; i++) {
         for (let j = 1; j <= 4; j++) {
-            valor = $('.tile[data-linha=' + i + '][data-coluna=' + j + ']').attr('data-numero')
-            outroValor = $('.tile[data-linha=' + (i + 1) + '][data-coluna=' + (j) + ']').attr('data-numero')
+            let valor = $('.tile[data-linha=' + i + '][data-coluna=' + j + ']').attr('data-numero')
+            let outroValor = $('.tile[data-linha=' + (i + 1) + '][data-coluna=' + (j) + ']').attr('data-numero')
             if (valor == outroValor) teste = false
             outroValor = $('.tile[data-linha=' + (i - 1) + '][data-coluna=' + (j) + ']').attr('data-numero')
             if (valor == outroValor) teste = false
