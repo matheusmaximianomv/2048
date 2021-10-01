@@ -78,7 +78,7 @@ $(window).resize(() => {
         $('.tile').css('height', altura)
         $('.tile').css('line-height', altura + 'px')
 
-        for (let i = 2; i <= 4; i++) {
+        for (let i = 2; i <= quantCelulas; i++) {
             $(`.tile[data-linha=${i}']`).css('top', topos[ i - 2 ])
             $(`.tile[data-coluna=${i}']`).css('left', esquerdas[ i - 2 ] + 5)
         }
@@ -357,10 +357,10 @@ function moverTilesCima (debug) {
 function moverTilesEsquerda (debug) {
     let novoTabuleiro = { '1': {}, '2': {}, '3': {}, '4': {} }
     let tilesMovidos = 0
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= quantCelulas; i++) {
         // Pegar valores da coluna
         let linha = {}
-        for (let j = 1; j <= 4; j++) {
+        for (let j = 1; j <= quantCelulas; j++) {
             linha[ j ] = tabuleiro[ i ][ j ]
         }
 
@@ -428,10 +428,10 @@ function moverTilesEsquerda (debug) {
 function moverTilesDireita (debug) {
     let novoTabuleiro = { '1': {}, '2': {}, '3': {}, '4': {} }
     let tilesMovidos = 0
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= quantCelulas; i++) {
         // Pegar valores da coluna
         let linha = {}
-        for (let j = 1; j <= 4; j++) {
+        for (let j = 1; j <= quantCelulas; j++) {
             linha[ j ] = tabuleiro[ i ][ j ]
         }
 
@@ -443,7 +443,7 @@ function moverTilesDireita (debug) {
                     // Variavel que diz para onde o tile deve ir
                     let colunaLivre
                     let teste = j + 1
-                    while (teste <= 4) {
+                    while (teste <= quantCelulas) {
                         if (linha[ teste ] == 0) {
                             fazer = 'mover'
                             colunaLivre = teste
@@ -690,8 +690,8 @@ function iniciarJogo () {
 // Função para verivicar se ainda podem ser feitos movimentos
 function movimentosPossiveis () {
     teste = true
-    for (let i = 1; i <= 4; i++) {
-        for (let j = 1; j <= 4; j++) {
+    for (let i = 1; i <= quantCelulas; i++) {
+        for (let j = 1; j <= quantCelulas; j++) {
             let valor = $('.tile[data-linha=' + i + '][data-coluna=' + j + ']').attr('data-numero')
             let outroValor = $('.tile[data-linha=' + (i + 1) + '][data-coluna=' + (j) + ']').attr('data-numero')
             if (valor == outroValor) teste = false
